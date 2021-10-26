@@ -1,0 +1,8 @@
+.idea/
+lib/*
+out
+target
+*.iml
+*.patch
+
+
