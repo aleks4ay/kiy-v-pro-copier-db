@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class AbstractService<T extends BaseEntity<T>> {
-    private static final Logger log = LoggerFactory.getLogger(AbstractService.class);
+    static final Logger log = LoggerFactory.getLogger(AbstractService.class);
 
     private final DbfReader<T> reader;
     private final BaseDao<T> dao;
@@ -21,6 +21,10 @@ public abstract class AbstractService<T extends BaseEntity<T>> {
     public AbstractService(DbfReader<T> reader, BaseDao<T> dao) {
         this.reader = reader;
         this.dao = dao;
+    }
+
+    public BaseDao<T> getDao() {
+        return dao;
     }
 
     public T findAbstractById(String id) {
@@ -68,6 +72,14 @@ public abstract class AbstractService<T extends BaseEntity<T>> {
         return dao.findAll()
                 .stream()
                 .collect(Collectors.toMap(T::getId, t -> t));
+    }
+
+
+    public List<String> readAllId() {
+        return dao.findAll()
+                .stream()
+                .map(T::getId)
+                .collect(Collectors.toList());
     }
 
     public void deleteNotUnique(List<T> newData, Map<String, T> oldDataMap) {

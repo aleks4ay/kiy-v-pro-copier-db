@@ -30,11 +30,6 @@ public class JournalReader implements DbfReader<Journal> {
                 .forEach(System.out::println);
     }
 
-//    @Override
-//    public DbfReader<Journal> getNewDbfReader() {
-//        return new JournalReader();
-//    }
-
     @Override
     public List <Journal> getAllFromDbfByteArray(byte[] dataByteArray)
             throws EmptyByteArrayException, CannotReadDataFromByteArrayException {
