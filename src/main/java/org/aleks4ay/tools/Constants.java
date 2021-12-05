@@ -18,6 +18,8 @@ public final class Constants {
     public static final String INVOICE_DESCRIPTION_FILE;
     public static final String TMC_BALANCE_FILE;
 
+    public static final String TMC_FILE_TEST;
+
     static {
         final ResourceBundle config = ResourceBundle
                 .getBundle("persistence", Locale.ENGLISH);
@@ -26,6 +28,7 @@ public final class Constants {
         WORKER_FILE = config.getString("fNameWorker");
         JOURNAL_FILE = config.getString("fNameJournal");
         TMC_FILE = config.getString("fNameTmc");
+        TMC_FILE_TEST = config.getString("fNameTmcTest");
         EMBODIMENT_FILE = config.getString("fNameEmbodiment");
         ORDER_FILE = config.getString("fNameOrder");
         DESCRIPTION_FILE = config.getString("fNameDescr");

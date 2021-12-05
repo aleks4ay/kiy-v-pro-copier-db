@@ -11,15 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TmcReader {
+public class TmcReader implements DbfReader<Tmc>{
     private static final Logger log = LoggerFactory.getLogger(TmcReader.class);
 
+    @Override
     public List<Tmc> getAllFromDbfByteArray(byte[] dataByteArray)
             throws EmptyByteArrayException, CannotReadDataFromByteArrayException {
         if (dataByteArray.length == 0) {

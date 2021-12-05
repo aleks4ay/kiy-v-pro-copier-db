@@ -12,41 +12,41 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class ConnectionPool implements ConnectionBase{
-    private static final Logger log = LoggerFactory.getLogger(ConnectionPool.class);
+public class ConnectionPoolForTest implements ConnectionBase{
+    private static final Logger log = LoggerFactory.getLogger(ConnectionPoolForTest.class);
 
-    private static final ConnectionPool instance = new ConnectionPool();
+    private static final ConnectionPoolForTest instance = new ConnectionPoolForTest();
 
-    private ConnectionPool() {
+    private ConnectionPoolForTest() {
     }
 
-    public static ConnectionPool getInstance() {
+    public static ConnectionPoolForTest getInstance() {
         return instance;
     }
 
-    private static final ComboPooledDataSource pooledDataSource = new ComboPooledDataSource();
+    private static ComboPooledDataSource pooledDataSource = new ComboPooledDataSource();
     private static final String DRIVER_NAME;
     private static final String USER_NAME;
     private static final String PASSWORD;
-    static final String URL;
+    static final String URL_TEST;
 
     static {
         final ResourceBundle config = ResourceBundle
                 .getBundle("persistence", Locale.ENGLISH);
         DRIVER_NAME = config.getString("database.driver");
-        URL = config.getString("database.url");
+        URL_TEST = config.getString("database.test.url");
         USER_NAME = config.getString("database.username");
         PASSWORD = config.getString("database.password");
-        initDataSource();
+        initDataSource(URL_TEST);
     }
 
-    static void initDataSource() {
+    static void initDataSource(String url) {
         try {
             pooledDataSource.setDriverClass(DRIVER_NAME);
         } catch (PropertyVetoException e) {
             log.warn("Can't set Combo Pooled Data Source from 'persistence.properties'.", e);
         }
-        pooledDataSource.setJdbcUrl(URL);
+        pooledDataSource.setJdbcUrl(url);
         pooledDataSource.setUser(USER_NAME);
         pooledDataSource.setPassword(PASSWORD);
         pooledDataSource.setMinPoolSize(5);
@@ -57,7 +57,7 @@ public class ConnectionPool implements ConnectionBase{
     @Override
     public Connection getConnection() {
         try {
-            return pooledDataSource.getConnection();
+            return  pooledDataSource.getConnection();
         } catch (SQLException e) {
             log.error("SQLException during get Connection from resource {}. {}",
                     new File("/database.properties").getAbsolutePath(), e);
@@ -71,7 +71,7 @@ public class ConnectionPool implements ConnectionBase{
             try {
                 conn.close();
             } catch (SQLException e) {
-                log.debug("SQLException during close connection from {}. {}", ConnectionPool.class, e);
+                log.debug("SQLException during close connection from {}. {}", ConnectionPoolForTest.class, e);
             }
         }
     }

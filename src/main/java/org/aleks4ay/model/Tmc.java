@@ -2,14 +2,10 @@ package org.aleks4ay.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-@EqualsAndHashCode
 @Data
 @AllArgsConstructor
-@ToString
-public class Tmc {
+public class Tmc implements BaseEntity<Tmc> {
 
     private String id;
     private String idParent;
@@ -26,6 +22,11 @@ public class Tmc {
         this.id = id;
     }
 
+    @Override
+    public String getEntityName() {
+        return "Tmc";
+    }
+
     public boolean equalsTechno(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -40,6 +41,7 @@ public class Tmc {
         return descr != null ? descr.equals(tmc.descr) : tmc.descr == null;
     }
 
+    @Override
     public String getDifferences(Tmc tmc) {
         String result = "";
         if (! this.id.equals(tmc.id)) {

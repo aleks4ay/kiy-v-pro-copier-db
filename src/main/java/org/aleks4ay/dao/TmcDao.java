@@ -9,10 +9,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class TmcDao extends AbstractDao<String, Tmc>{
+public class TmcDao extends AbstractDao<Tmc> implements BaseDao<Tmc> {
 
-    public TmcDao(Connection connection) {
-        super(connection, new TmcMapper(), "Tmc");
+    public TmcDao(ConnectionBase connectionBase) {
+        super(new TmcMapper(), connectionBase);
     }
 
     @Override
@@ -38,5 +38,10 @@ public class TmcDao extends AbstractDao<String, Tmc>{
     @Override
     public boolean deleteAll(Collection<Tmc> list) {
         return deleteAbstractAll(ConstantsSql.TMC_DELETE, list);
+    }
+
+    @Override
+    public String getEntityName() {
+        return "Tmc";
     }
 }
