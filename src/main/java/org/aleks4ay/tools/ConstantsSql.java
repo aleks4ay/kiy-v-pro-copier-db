@@ -44,4 +44,9 @@ public final class ConstantsSql {
     public static final String DESCRIPTION_UPDATE = "UPDATE descriptions SET iddoc=?, position=?, id_tmc=?, quantity=?, descr_second=?, " +
             "size_a=?, size_b=?, size_c=?, embodiment=? WHERE id = ?;";
 
+    public static final String EMBODIMENT_GET_ONE = "SELECT * FROM embodiment WHERE id = ?;";
+    public static final String EMBODIMENT_GET_ALL = "SELECT * FROM embodiment;";
+    public static final String EMBODIMENT_DELETE = "DELETE FROM embodiment WHERE id = ?;";
+    public static final String EMBODIMENT_CREATE = "INSERT INTO embodiment (description, id) VALUES (?, ?);";
+    public static final String EMBODIMENT_UPDATE = "UPDATE embodiment SET description=? where id=?;";
 }

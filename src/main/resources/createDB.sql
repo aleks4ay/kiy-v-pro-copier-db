@@ -10,6 +10,12 @@ CREATE TABLE worker
     name VARCHAR
 );
 
+CREATE TABLE embodiment
+(
+    id VARCHAR(9) PRIMARY KEY NOT NULL,
+    description VARCHAR
+);
+
 CREATE TABLE tmc
 (
   id VARCHAR(9) PRIMARY KEY NOT NULL,
