@@ -101,7 +101,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.aleks4ay.run.CopyNewData1C</mainClass>
+                            <mainClass>org.aleks4ay.copier.CopyNewData1C</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
