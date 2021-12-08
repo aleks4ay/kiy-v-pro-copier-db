@@ -19,7 +19,8 @@ public class TmcService extends AbstractService<Tmc>{
 
     public static void main(String[] args) {
         TmcService tmcService = new TmcService(new TmcReader(), new TmcDao(ConnectionPool.getInstance()));
-        tmcService.copyNewDataAbstract(FILE_PATH);
+        System.out.println(tmcService.findById("   1NN"));
+//        tmcService.copyNewDataAbstract(FILE_PATH);
     }
 
     public Tmc findById(String id) {
