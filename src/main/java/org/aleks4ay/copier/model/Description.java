@@ -7,7 +7,7 @@ import lombok.Data;
 public class Description implements BaseEntity<Description> {
 
     private String id;
-    private String idDoc;
+    private String idOrder;
     private int position;
     private String idTmc;
     private int quantity;
@@ -19,10 +19,10 @@ public class Description implements BaseEntity<Description> {
 //    private Status status;
 
 
-    public Description(String id, String idDoc, int position, String idTmc, int quantity,
+    public Description(String id, String idOrder, int position, String idTmc, int quantity,
                        String descrSecond, int sizeA, int sizeB, int sizeC, String embodiment) {
         this.id = id;
-        this.idDoc = idDoc;
+        this.idOrder = idOrder;
         this.position = position;
         this.idTmc = idTmc;
         this.quantity = quantity;
@@ -49,8 +49,8 @@ public class Description implements BaseEntity<Description> {
         if (! this.id.equals(description.id)) {
             result += "id ['" + description.id + "' --> '" + this.id + "'] ";
         }
-        if (! this.idDoc.equals(description.idDoc) ) {
-            result += "idDoc ['" + description.idDoc + "' --> '" + this.idDoc + "'] ";
+        if (! this.idOrder.equals(description.idOrder) ) {
+            result += "idOrder ['" + description.idOrder + "' --> '" + this.idOrder + "'] ";
         }
         if (this.position != description.position) {
             result += "position ['" + description.position + "' --> '" + this.position + "'] ";

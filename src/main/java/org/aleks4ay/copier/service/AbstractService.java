@@ -74,14 +74,6 @@ public abstract class AbstractService<T extends BaseEntity<T>> {
                 .collect(Collectors.toMap(T::getId, t -> t));
     }
 
-
-/*    public List<String> readAllId() {
-        return dao.findAll()
-                .stream()
-                .map(T::getId)
-                .collect(Collectors.toList());
-    }*/
-
     public void deleteNotUnique(List<T> newData, Map<String, T> oldDataMap) {
         Iterator<T> iterator = newData.iterator();
         while (iterator.hasNext()) {

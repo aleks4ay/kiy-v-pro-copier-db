@@ -1,11 +1,13 @@
 package org.aleks4ay.copier.dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.aleks4ay.copier.tools.ProtectedConfigFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyVetoException;
 import java.io.File;
+import java.security.GeneralSecurityException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Locale;
@@ -27,6 +29,7 @@ public class ConnectionPoolForTest implements ConnectionBase{
     private static final String DRIVER_NAME;
     private static final String USER_NAME;
     private static final String PASSWORD;
+    private static final String KEY;
     static final String URL_TEST;
 
     static {
@@ -35,6 +38,7 @@ public class ConnectionPoolForTest implements ConnectionBase{
         DRIVER_NAME = config.getString("database.driver");
         URL_TEST = config.getString("database.test.url");
         USER_NAME = config.getString("database.username");
+        KEY = config.getString("database.key");
         PASSWORD = config.getString("database.password");
         initDataSource(URL_TEST);
     }
@@ -45,9 +49,15 @@ public class ConnectionPoolForTest implements ConnectionBase{
         } catch (PropertyVetoException e) {
             log.warn("Can't set Combo Pooled Data Source from 'persistence.properties'.", e);
         }
+        String decriptedPassword = null;
+        try {
+            decriptedPassword = ProtectedConfigFile.decrypt(PASSWORD, KEY);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
         pooledDataSource.setJdbcUrl(url);
         pooledDataSource.setUser(USER_NAME);
-        pooledDataSource.setPassword(PASSWORD);
+        pooledDataSource.setPassword(decriptedPassword);
         pooledDataSource.setMinPoolSize(5);
         pooledDataSource.setAcquireIncrement(5);
         pooledDataSource.setMaxPoolSize(5);

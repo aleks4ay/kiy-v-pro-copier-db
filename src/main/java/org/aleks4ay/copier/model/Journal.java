@@ -10,15 +10,15 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class Journal implements BaseEntity<Journal> {
 
-    private String idDoc;
+    private String id;
     private String docNumber;
     private Timestamp dateCreate;
 
     @Override
     public String getDifferences(Journal journal) {
         String result = "";
-        if (! this.idDoc.equals(journal.idDoc) ) {
-            result += "idDoc ['" + journal.idDoc + "' --> '" + this.idDoc + "'] ";
+        if (! this.id.equals(journal.id) ) {
+            result += "idDoc ['" + journal.id + "' --> '" + this.id + "'] ";
         }
         if (! this.docNumber.equals(journal.docNumber) ) {
             result += "doc Number ['" + journal.docNumber + "' --> '" + this.docNumber + "'] ";
@@ -32,7 +32,7 @@ public class Journal implements BaseEntity<Journal> {
 
     @Override
     public String getId() {
-        return idDoc;
+        return id;
     }
 
     @Override

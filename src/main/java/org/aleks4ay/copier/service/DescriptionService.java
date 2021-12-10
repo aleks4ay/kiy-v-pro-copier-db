@@ -33,7 +33,7 @@ public class DescriptionService extends AbstractService<Description> {
         return findAbstractById(id);
     }
 
-    @Override
+/*    @Override
     public List<Description> readNewData(String filePath) throws CannotReadDataFromByteArrayException, EmptyByteArrayException {
         log.info("   reading 'DESCRIPTION'.");
 
@@ -44,11 +44,11 @@ public class DescriptionService extends AbstractService<Description> {
             List<Description> descriptionList = new DescriptionReader().getAllFromDbfByteArray(bytesEntity);
             return descriptionList
                     .stream()
-                    .filter(i -> keys.contains(i.getIdDoc()))
+                    .filter(i -> keys.contains(i.getIdOrder()))
                     .collect(Collectors.toList());
         } catch (EmptyByteArrayException | CannotReadDataFromByteArrayException e) {
             log.warn("Can't copy new data from 'Description'.", e);
             throw e;
         }
-    }
+    }*/
 }

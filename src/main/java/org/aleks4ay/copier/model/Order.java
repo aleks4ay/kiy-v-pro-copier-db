@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class Order implements BaseEntity<Order>{
 
-    private String idDoc;
+    private String id;
     private String clientId;
     private String managerId;
     private int durationTime;
@@ -24,14 +24,14 @@ public class Order implements BaseEntity<Order>{
 
     @Override
     public String getId() {
-        return idDoc;
+        return id;
     }
 
     @Override
     public String getDifferences(Order order) {
         String result = "";
-        if (! this.idDoc.equals(order.idDoc) ) {
-            result += "idDoc [" + order.idDoc + "--> " + this.idDoc + "] ";
+        if (! this.id.equals(order.id) ) {
+            result += "idDoc [" + order.id + "--> " + this.id + "] ";
         }
         if (! this.clientId.equals(order.clientId) ) {
             result += "idClient [" + order.clientId + "--> " + this.clientId + "] ";

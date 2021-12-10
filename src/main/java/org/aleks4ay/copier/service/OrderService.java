@@ -29,4 +29,9 @@ public class OrderService extends AbstractService<Order> {
     public List<String> findAllOrderId() {
         return ((OrderDao)getDao()).findAllId();
     }
+//
+//    @Override
+//    public boolean createAll(List<Order> newDataAfterRemoving) {
+//         return getDao().createAll(newDataAfterRemoving);
+//    }
 }

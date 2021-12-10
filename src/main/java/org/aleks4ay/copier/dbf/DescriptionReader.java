@@ -4,9 +4,12 @@ import com.linuxense.javadbf.DBFException;
 import com.linuxense.javadbf.DBFReader;
 import com.linuxense.javadbf.DBFRow;
 import com.linuxense.javadbf.DBFUtils;
+import org.aleks4ay.copier.dao.ConnectionPool;
+import org.aleks4ay.copier.dao.OrderDao;
 import org.aleks4ay.copier.exception.CannotReadDataFromByteArrayException;
 import org.aleks4ay.copier.exception.EmptyByteArrayException;
 import org.aleks4ay.copier.model.Description;
+import org.aleks4ay.copier.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +24,12 @@ public class DescriptionReader  implements DbfReader<Description>{
 
     @Override
     public List<Description> getAllFromDbfByteArray(byte[] dataByteArray) throws EmptyByteArrayException, CannotReadDataFromByteArrayException {
+        final List<String> keys = new OrderService(new OrderReader(), new OrderDao(ConnectionPool.getInstance())).findAllOrderId();
+        return getAllFromDbfByteArrayWithReducing(dataByteArray, keys);
+    }
+
+
+    public List<Description> getAllFromDbfByteArrayWithReducing(byte[] dataByteArray, List<String> idOrders) throws EmptyByteArrayException, CannotReadDataFromByteArrayException {
         if (dataByteArray.length == 0) {
             throw new EmptyByteArrayException();
         }
@@ -30,7 +39,10 @@ public class DescriptionReader  implements DbfReader<Description>{
         try {
             DBFRow row;
             while ((row = reader.nextRow()) != null) {
-                String idDoc = row.getString("IDDOC");
+                String idOrder = row.getString("IDDOC");
+                if (!idOrders.contains(idOrder)) {
+                    continue;
+                }
                 String idTmc = row.getString("SP1902");//Must not be: 'Go designer to size measurement', 'Shipment', 'Fixing', 'DELETED'
                 if (idTmc.equalsIgnoreCase("   CBN") || idTmc.equalsIgnoreCase("   7LH") ||
                         idTmc.equalsIgnoreCase("   9VQ") || idTmc.equalsIgnoreCase("     0")) {
@@ -43,8 +55,8 @@ public class DescriptionReader  implements DbfReader<Description>{
                 int sizeB = row.getInt("SP14687");
                 int sizeC = row.getInt("SP14688");
                 String idEmbodiment = row.getString("SP14717");
-                String kod = idDoc + "-" + position;
-                descriptions.add(new Description(kod, idDoc, position, idTmc, quantity, descrSecond, sizeA, sizeB, sizeC, idEmbodiment));
+                String kod = idOrder + "-" + position;
+                descriptions.add(new Description(kod, idOrder, position, idTmc, quantity, descrSecond, sizeA, sizeB, sizeC, idEmbodiment));
             }
             log.debug("Was read {} Description from 1C 'DT1898'.", descriptions.size());
             return descriptions;
