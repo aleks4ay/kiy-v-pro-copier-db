@@ -41,7 +41,8 @@ public class DescriptionMapper implements ObjectMapper<Description> {
 
     public void insertToResultSetStatus(PreparedStatement statement, Description description) throws SQLException {
         statement.setString(1, "NEW");
-        statement.setString(2, description.getId());
+        statement.setString(2, "NEW");
+        statement.setString(3, description.getId());
     }
 
     public void insertToResultSetTime(PreparedStatement statement, Description description) throws SQLException {

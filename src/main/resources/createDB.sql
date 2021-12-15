@@ -18,17 +18,17 @@ CREATE TABLE embodiment
 
 CREATE TABLE tmc
 (
-  id VARCHAR(9) PRIMARY KEY NOT NULL,
-  id_parent VARCHAR(9),
-  code VARCHAR(5),
-  descr VARCHAR(50),
-  size_a INTEGER,
-  size_b INTEGER,
-  size_c INTEGER,
-  is_folder INTEGER,
-  descr_all VARCHAR(100),
-  type VARCHAR(9),
-  store_c INTEGER DEFAULT 0
+    id VARCHAR(9) PRIMARY KEY NOT NULL,
+    id_parent VARCHAR(9),
+    code VARCHAR(5),
+    descr VARCHAR(50),
+    size_a INTEGER,
+    size_b INTEGER,
+    size_c INTEGER,
+    is_folder INTEGER,
+    descr_all VARCHAR(100),
+    type VARCHAR(9),
+    store_c INTEGER DEFAULT 0
 );
 
 /*CREATE TABLE techno_item
@@ -51,68 +51,71 @@ CREATE TABLE journal
 
 CREATE TABLE orders
 (
-  id VARCHAR(9) PRIMARY KEY NOT NULL,
-  id_client VARCHAR(9),
-  id_manager VARCHAR(9),
-  duration INTEGER,
-  t_factory TIMESTAMP WITHOUT TIME ZONE,
-  price NUMERIC(14,3)
+    id VARCHAR(9) PRIMARY KEY NOT NULL,
+    id_client VARCHAR(9),
+    id_manager VARCHAR(9),
+    duration INTEGER,
+    t_factory TIMESTAMP WITHOUT TIME ZONE,
+    status VARCHAR(12) DEFAULT 'NEW',
+    price NUMERIC(14,3)
 );
 
 CREATE TABLE descriptions
 (
-  id VARCHAR(13) PRIMARY KEY NOT NULL,
-  id_order VARCHAR(9),
-  position INTEGER,
-  id_tmc VARCHAR(9),
-  quantity INTEGER,
-  descr_second VARCHAR(300),
-  size_a INTEGER,
-  size_b INTEGER,
-  size_c INTEGER,
-  embodiment VARCHAR,
-  FOREIGN KEY (id_order) REFERENCES orders (id) ON DELETE CASCADE
+    id VARCHAR(13) PRIMARY KEY NOT NULL,
+    id_order VARCHAR(9),
+    position INTEGER,
+    id_tmc VARCHAR(9),
+    quantity INTEGER,
+    descr_second VARCHAR(300),
+    size_a INTEGER,
+    size_b INTEGER,
+    size_c INTEGER,
+    embodiment VARCHAR,
+    type VARCHAR(13) NOT NULL DEFAULT 'NEW',
+    status VARCHAR(13) NOT NULL DEFAULT 'NEW',
+    designer_name VARCHAR,
+    FOREIGN KEY (id_order) REFERENCES orders (id) ON DELETE CASCADE
 );
 
 create sequence times_id_seq START WITH 1;
 
-CREATE TABLE order_status
+/*CREATE TABLE order_status
 (
     id VARCHAR(9) PRIMARY KEY NOT NULL,
     status VARCHAR(12) DEFAULT 'NEW',
-    FOREIGN KEY (id) REFERENCES orders (id)
-);
-CREATE TABLE order_times
+    FOREIGN KEY (id) REFERENCES orders (id) ON DELETE CASCADE
+);*/
+CREATE TABLE order_time
 (
     id bigint PRIMARY KEY DEFAULT nextval('times_id_seq'),
     id_order VARCHAR(9) NOT NULL,
     status VARCHAR(12),
     time TIMESTAMP,
-    FOREIGN KEY (id_order) REFERENCES order_status (id)  ON DELETE CASCADE
+    FOREIGN KEY (id_order) REFERENCES orders (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX order_times_idx ON order_times (id_order, status);
+CREATE UNIQUE INDEX order_times_idx ON order_time (id_order, status);
 
 
-CREATE TABLE description_status
+/*CREATE TABLE description_status
 (
     id VARCHAR(13) PRIMARY KEY NOT NULL,
-    type VARCHAR(13),
-    status VARCHAR(13) NOT NULL,
-    is_techno_product INTEGER,
+    type VARCHAR(13) NOT NULL DEFAULT 'NEW',
+    status VARCHAR(13) NOT NULL DEFAULT 'NEW',
     designer_name VARCHAR,
-    is_parsing INTEGER DEFAULT 0,
-    FOREIGN KEY (id) REFERENCES descriptions (id)
-);
+    FOREIGN KEY (id) REFERENCES descriptions (id) ON DELETE CASCADE
+);*/
 
-CREATE TABLE description_times
+
+CREATE TABLE description_time
 (
     id bigint PRIMARY KEY DEFAULT nextval('times_id_seq'),
     id_description VARCHAR(13) NOT NULL,
     status VARCHAR(13) NOT NULL,
     time TIMESTAMP,
-    FOREIGN KEY (id_description) REFERENCES description_status (id) ON DELETE CASCADE
+    FOREIGN KEY (id_description) REFERENCES descriptions (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX description_times_idx ON description_times (id_description, status);
+CREATE UNIQUE INDEX description_times_idx ON description_time (id_description, status);
 
 
 /*CREATE TABLE invoice

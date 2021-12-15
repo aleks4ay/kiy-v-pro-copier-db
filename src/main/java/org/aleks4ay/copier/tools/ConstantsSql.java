@@ -34,8 +34,7 @@ public final class ConstantsSql {
     public static final String ORDER_DELETE = "DELETE FROM orders WHERE id = ?;";
     public static final String ORDER_CREATE = "insert into orders (id_client, id_manager, duration, t_factory, price, id)" +
             " VALUES (?, ?, ?, ?, ?, ?);";
-    public static final String ORDER_STATUS_CREATE = "insert into order_status (status, id) VALUES (?, ?);";
-    public static final String ORDER_TIME_CREATE = "insert into order_times (id_order, status, time) VALUES (?, ?, ?);";
+    public static final String ORDER_TIME_CREATE = "insert into order_time (id_order, status, time) VALUES (?, ?, ?);";
     public static final String ORDER_UPDATE = "UPDATE orders " +
             "SET id_client=?, id_manager=?, duration=?, t_factory=?, price=? where id=?;";
 
@@ -44,8 +43,7 @@ public final class ConstantsSql {
     public static final String DESCRIPTION_DELETE = "DELETE FROM descriptions WHERE id = ?;";
     public static final String DESCRIPTION_CREATE = "INSERT INTO descriptions (id_order, position, id_tmc, quantity, descr_second, " +
             "size_a, size_b, size_c, embodiment, id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    public static final String DESCRIPTION_STATUS_CREATE = "insert into description_status (status, id) VALUES (?, ?);";
-    public static final String DESCRIPTION_TIME_CREATE = "insert into description_times (id_description, status, time) VALUES (?, ?, ?);";
+    public static final String DESCRIPTION_TIME_CREATE = "insert into description_time (id_description, status, time) VALUES (?, ?, ?);";
 
     public static final String DESCRIPTION_UPDATE = "UPDATE descriptions SET id_order=?, position=?, id_tmc=?, quantity=?, descr_second=?, " +
             "size_a=?, size_b=?, size_c=?, embodiment=? WHERE id = ?;";

@@ -35,8 +35,7 @@ public class DescriptionDao extends AbstractDao<Description> implements BaseDao<
     public boolean createAll(List<Description> list) {
         boolean resultCreateDescription = saveOrUpdateAbstractAll(ConstantsSql.DESCRIPTION_CREATE, list, "Save");
         if (resultCreateDescription) {
-            return createStatusOrTimeAll(ConstantsSql.DESCRIPTION_STATUS_CREATE, list, "status")
-                    && createStatusOrTimeAll(ConstantsSql.DESCRIPTION_TIME_CREATE, list, "time");
+            return createTimeAll(ConstantsSql.DESCRIPTION_TIME_CREATE, list);
         }
         return false;
     }
@@ -57,7 +56,7 @@ public class DescriptionDao extends AbstractDao<Description> implements BaseDao<
     }
 
 
-    boolean createStatusOrTimeAll(String sql, List<Description> list, String target) {
+    boolean createTimeAll(String sql, List<Description> list) {
         if (list.isEmpty()) {
             return true;
         }
@@ -74,19 +73,19 @@ public class DescriptionDao extends AbstractDao<Description> implements BaseDao<
                 prepStatement.addBatch();
                 int[] numberOfUpdates = prepStatement.executeBatch();
                 result += IntStream.of(numberOfUpdates).sum();
-                log.debug("Will be save '{}' for Description: {}", target, description);
+                log.debug("Will be save 'time' for Description: {}", description);
             }
             if (result == list.size()) {
                 connection.commit();
-                log.debug("{} '{}' for saved.", target, result);
+                log.debug("'time' {} saved.", result);
                 return true;
             } else {
-                log.debug("Saved {}, but need to Save {} '{}' for Description. Not equals!!!", result, list.size(), target);
+                log.debug("Saved {}, but need to Save {} 'time' for Description. Not equals!!!", result, list.size());
                 connection.rollback();
                 return false;
             }
         } catch (SQLException e) {
-            log.warn("Exception during saving {} '{}' for Description. SQL = {}.", list.size(), target, sql, e);
+            log.warn("Exception during saving {} 'time' for Description. SQL = {}.", list.size(), sql, e);
             return false;
         } finally {
             try {
