@@ -20,8 +20,8 @@ import java.util.*;
 
 public class JournalReader implements DbfReader<Journal> {
     private static final Logger log = LoggerFactory.getLogger(JournalReader.class);
-    private final long FIRST_OF_JANUARY_2020_IN_MILLIS =
-            LocalDateTime.of(2020, 1, 1, 0, 0).toEpochSecond(java.time.ZoneOffset.UTC) * 1000;
+    private final long FIRST_OF_JULY_2021_IN_MILLIS =
+            LocalDateTime.of(2021, 7, 1, 0, 0).toEpochSecond(java.time.ZoneOffset.UTC) * 1000;
 
     public static void main(String[] args) throws IOException {
         String fileName = Constants.DBF_PATH + Constants.JOURNAL_FILE;
@@ -44,7 +44,7 @@ public class JournalReader implements DbfReader<Journal> {
             while ((row = reader.nextRow()) != null) {
                 Date keyOrderYear = row.getDate("DATE");
                 int keyOrderIsEnable = row.getInt("CLOSED");
-                if (keyOrderYear.getTime() < FIRST_OF_JANUARY_2020_IN_MILLIS || keyOrderIsEnable ==4 ) {
+                if (keyOrderYear.getTime() < FIRST_OF_JULY_2021_IN_MILLIS || keyOrderIsEnable ==4 ) {
                     continue;
                 }
                 String idDoc = row.getString("IDDOC");

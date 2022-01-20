@@ -10,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class OrderReader implements DbfReader<Order>{
     private static final Logger log = LoggerFactory.getLogger(OrderReader.class);
+    private final long FIRST_OF_JULY_2021_IN_MILLIS =
+            LocalDateTime.of(2021, 7, 1, 0, 0).toEpochSecond(java.time.ZoneOffset.UTC) * 1000;
 
     @Override
     public List<Order> getAllFromDbfByteArray(byte[] dataByteArray)
@@ -39,7 +42,7 @@ public class OrderReader implements DbfReader<Order>{
                 if (date == null) {
                     dateToFactory = null;
                 }
-                else if (date.getTime() < 1560805200000L) {
+                else if (date.getTime() < FIRST_OF_JULY_2021_IN_MILLIS) { //1_625_086_800_000L
                     continue;
                 }
                 else {
